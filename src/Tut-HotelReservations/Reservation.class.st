@@ -3,10 +3,26 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'beginDate',
-		'endDate'
+		'endDate',
+		'numberOfPeople'
 	],
 	#category : #'Tut-HotelReservations'
 }
+
+{ #category : #'as yet unclassified' }
+Reservation >> getBeginDate [
+	^ beginDate.
+]
+
+{ #category : #'as yet unclassified' }
+Reservation >> getEndDate [
+	^ endDate.
+]
+
+{ #category : #'as yet unclassified' }
+Reservation >> getNumberOfPeople [
+	^ numberOfPeople.
+]
 
 { #category : #testing }
 Reservation >> isFrom: aBeginDate to: anEndDate [
@@ -28,4 +44,9 @@ Reservation >> setBeginDate: date [
 { #category : #initialization }
 Reservation >> setEndDate: date [
 	endDate := date.
+]
+
+{ #category : #initialization }
+Reservation >> setNumberOfPeople: aCapacity [
+	numberOfPeople := aCapacity.
 ]

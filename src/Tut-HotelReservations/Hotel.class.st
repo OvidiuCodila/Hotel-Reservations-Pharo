@@ -23,24 +23,11 @@ Hotel >> addRoomFor: aCapacity [
 	room := Room new.
 	room setCapacity: aCapacity.
 	rooms add: room.
-]
-
-{ #category : #accessing }
-Hotel >> gtRoomsFor: aView [
-	<gtView>
-	^ aView list
-		title: 'Rooms';
-		items: [rooms]
-]
-
-{ #category : #initialization }
-Hotel >> initialize [
-	super initialize.
-	rooms := OrderedCollection new.
+	room setName: rooms size.
 ]
 
 { #category : #testing }
-Hotel >> isAvailableFrom: aBeginDate to: anEndDate for: aCapacity [
+Hotel >> availableRoomsFrom: aBeginDate to: anEndDate for: aCapacity [
 	| sc cap room res |
 	sc := SortedCollection sortBlock: [ :r1 :r2 | r1 capacity >= r2 capacity ].
 	sc addAll: rooms.
@@ -51,7 +38,7 @@ Hotel >> isAvailableFrom: aBeginDate to: anEndDate for: aCapacity [
 		[ cap > 0 ] whileTrue: [  
 			room := sc detect: [:aRoom |
 				(aRoom isAvailableFrom: aBeginDate to: anEndDate) and: [(aRoom capacity <= cap)
-					and: [ aRoom isNotAlreadySelectedIn: res ] ]] ifNone: [ nil ].
+					and: [ (res includes: aRoom) not] ]] ifNone: [ nil ].
 				( room isNil )
 					ifTrue: [ cap := -1 ]
 					ifFalse: [ cap := cap - room capacity. res add: room ]. 
@@ -61,4 +48,22 @@ Hotel >> isAvailableFrom: aBeginDate to: anEndDate for: aCapacity [
 		].
 	res removeAll.
 	^ res.
+]
+
+{ #category : #accessing }
+Hotel >> gtRoomsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Rooms' translated;
+		items: [rooms];
+		column: 'Name' translated
+			item: [:aRoom | aRoom name];
+		column: 'Capacity' translated
+			item: [:aRoom | aRoom capacity].
+]
+
+{ #category : #initialization }
+Hotel >> initialize [
+	super initialize.
+	rooms := OrderedCollection new.
 ]

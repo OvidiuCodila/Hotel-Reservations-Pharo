@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'reservations',
-		'capacity'
+		'capacity',
+		'name'
 	],
 	#category : #'Tut-HotelReservations'
 }
@@ -14,12 +15,27 @@ Room >> addReservationFrom: aBeginDate to: andEndDate [
 	res := Reservation new.
 	res setBeginDate: aBeginDate.
 	res setEndDate: andEndDate.
+	res setNumberOfPeople: self capacity.
 	reservations add: res.
 ]
 
 { #category : #accessing }
 Room >> capacity [
 	^ capacity.
+]
+
+{ #category : #accessing }
+Room >> gtReservationsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Reservations' translated;
+		items: [reservations];
+		column: 'Capacity' translated
+			item: [:anElement | anElement getNumberOfPeople];
+		column: 'BeginDate' translated
+			item: [:anElement | anElement getBeginDate];
+		column: 'EndDate' translated
+			item: [:anElement | anElement getEndDate].
 ]
 
 { #category : #testing }
@@ -52,14 +68,9 @@ Room >> isAvailableOn: date [
 			aReservation isOn: date ].
 ]
 
-{ #category : #testing }
-Room >> isNotAlreadySelectedIn: aSolution [
-	| foundRoom |
-	foundRoom := aSolution detect: [ :aRoom |
-		self == aRoom ] ifNone: [ nil ].
-	(foundRoom isNil)
-		ifTrue: [ ^ true ]
-		ifFalse: [ ^ false ].
+{ #category : #accessing }
+Room >> name [
+	^ name.
 ]
 
 { #category : #accessing }
@@ -70,4 +81,9 @@ Room >> reservations [
 { #category : #initialization }
 Room >> setCapacity: aCapacity [
 	capacity := aCapacity.
+]
+
+{ #category : #initialization }
+Room >> setName: aName [
+	name := aName.
 ]

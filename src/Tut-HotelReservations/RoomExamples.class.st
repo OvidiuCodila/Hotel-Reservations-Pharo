@@ -22,7 +22,7 @@ RoomExamples >> hotelWithRooms [
 	<gtExample>
 	| hotel |
 	hotel := self hotelWithFourRoomsAndReservation.
-	^ hotel isAvailableFrom: Date today to: Date today + 2 days for: 7
+	^ hotel availableRoomsFrom: Date today to: Date today + 2 days for: 7
 ]
 
 { #category : #'as yet unclassified' }
@@ -43,6 +43,7 @@ RoomExamples >> roomWithMoreReservations [
 	<gtExample>
 	| room testDateInTrue testDateOutTrue testDateInFail testDateOutFail |
 	room := Room new.
+	room setCapacity: 3.
 	room addReservationFrom: (Date year: 2019 month: 06 day: 27) to: (Date year: 2019 month: 06 day: 29).
 	room addReservationFrom: (Date year: 2019 month: 07 day: 01) to: (Date year: 2019 month: 07 day: 04).
 	room addReservationFrom: (Date year: 2019 month: 07 day: 05) to: (Date year: 2019 month: 07 day: 06).
