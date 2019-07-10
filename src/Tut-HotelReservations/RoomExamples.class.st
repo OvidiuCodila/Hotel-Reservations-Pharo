@@ -1,3 +1,8 @@
+"
+!Room Examples
+
+${example:RoomExamples>>#roomWithMoreReservations|noCode=|previewShow=#gtReservationsFor:}$
+"
 Class {
 	#name : #RoomExamples,
 	#superclass : #Object,
