@@ -30,7 +30,7 @@ Room >> gtReservationsFor: aView [
 	^ aView columnedList
 		title: 'Reservations' translated;
 		items: [reservations];
-		column: 'Capacity' translated
+		column: 'NumberOfPeople' translated
 			item: [:anElement | anElement getNumberOfPeople];
 		column: 'BeginDate' translated
 			item: [:anElement | anElement getBeginDate];

@@ -67,3 +67,8 @@ Hotel >> initialize [
 	super initialize.
 	rooms := OrderedCollection new.
 ]
+
+{ #category : #accessing }
+Hotel >> rooms [
+	^ rooms.
+]
