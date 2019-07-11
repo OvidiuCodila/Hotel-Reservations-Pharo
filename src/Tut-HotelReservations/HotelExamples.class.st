@@ -20,11 +20,10 @@ HotelExamples >> addTreeNodesAndEdges [
 		with: hotel rooms.
 	view nodes 
 		shape: [ :x | 
-			self nodeStyleWithText: (x getBeginDate) 
-				andFontSize: 6 andSize: (10 @ 10)];
+			self nodeStyleWithText: (x getBeginDate asString,' - ',x getEndDate asString) andFontSize: 7 andSize: (90 @ 10)];
 		with: hotel allReservations.
 	self assert:
-		view topStep root children size equals: (hotel rooms size + hotel allReservations size + 1).
+		view topStep root children size equals: 6. "(hotel rooms size + hotel allReservations size + 1)"
 	view edges 
 		fromCenterBottom;
 		toCenterTop;
@@ -38,6 +37,7 @@ HotelExamples >> addTreeNodesAndEdges [
 			self edgeStyle];
 		connect: (hotel rooms) from: [ :r | r ] toAll: [:r | r reservations].
 	self assert: view topStep root graph edgeChildren size equals: 5.
+	"(hotel rooms size + hotel allReservations size)"
 	^ view.
 ]
 
