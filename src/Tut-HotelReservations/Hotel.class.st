@@ -26,6 +26,16 @@ Hotel >> addRoomFor: aCapacity [
 	room setName: rooms size.
 ]
 
+{ #category : #'as yet unclassified' }
+Hotel >> allReservations [
+	| reservations |
+	reservations := OrderedCollection new.
+	self rooms do: [ :aRoom |
+		(aRoom reservations isEmpty) 
+			ifFalse: [ reservations addAll: aRoom reservations ] ].
+	^ reservations.
+]
+
 { #category : #testing }
 Hotel >> availableRoomsFrom: aBeginDate to: anEndDate for: aCapacity [
 	| sc cap room res |
