@@ -2,6 +2,7 @@ Class {
 	#name : #Hotel,
 	#superclass : #Object,
 	#instVars : [
+		'name',
 		'rooms'
 	],
 	#category : #'Tut-HotelReservations'
@@ -79,6 +80,16 @@ Hotel >> initialize [
 ]
 
 { #category : #accessing }
+Hotel >> name [
+	^ name.
+]
+
+{ #category : #accessing }
 Hotel >> rooms [
 	^ rooms.
+]
+
+{ #category : #initialization }
+Hotel >> setName: aName [
+	name := aName.
 ]
