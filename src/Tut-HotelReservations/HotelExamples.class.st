@@ -7,44 +7,46 @@ Class {
 { #category : #adding }
 HotelExamples >> addTreeNodesAndEdges [
 	<gtExample>
-	| view hotel reservs rooms numberOfNodes |
+	| view hotel |
 	view := self emptyView.
 	hotel := self hotelWithFourRoomsAndReservation.
-	rooms := hotel rooms.
-	reservs := hotel allReservations.
-	numberOfNodes := rooms size + reservs size + 1.
 	view nodes 
 		shape: [ :x | 
-			BlTextElement new text: ((x name) asString asRopedText 
-				attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 15) ];
+			self nodeStyleWithText: (x name) andFontSize: 10 andSize: (50 @ 10)];
 		with: { hotel }.
 	view nodes 
 		shape: [ :x | 
-			BlTextElement new text: ((x capacity) asString asRopedText 
-				attributes: {BlTextForegroundAttribute paint: Color gray}; fontSize: 13) ];
-		with: rooms.
+			self nodeStyleWithText: (x capacity) andFontSize: 8 andSize: (8 @ 8)];
+		with: hotel rooms.
 	view nodes 
 		shape: [ :x | 
-			BlTextElement new text: (x asString asRopedText 
-				attributes: {BlTextForegroundAttribute paint: Color lightGray}; fontSize: 8) ];
-		with: reservs.
-	self assert: view topStep root children size equals: numberOfNodes.
+			self nodeStyleWithText: (x getBeginDate) 
+				andFontSize: 6 andSize: (10 @ 10)];
+		with: hotel allReservations.
+	self assert:
+		view topStep root children size equals: (hotel rooms size + hotel allReservations size + 1).
 	view edges 
 		fromCenterBottom;
 		toCenterTop;
-		shape: [ :x | 
-			BlLineElement new
-				border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2) ];
+		shape: [ :x |
+			self edgeStyle];
 		connect: { hotel } from: [:h | h] toAll: [:h | h rooms].
 	view edges
 		fromCenterBottom; 
 		toCenterTop;
-		shape: [ :x | 
-			BlLineElement new
-				border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2) ];
-		connect: rooms from: [ :r | r ] toAll: [:r | r reservations].
+		shape: [ :x |
+			self edgeStyle];
+		connect: (hotel rooms) from: [ :r | r ] toAll: [:r | r reservations].
 	self assert: view topStep root graph edgeChildren size equals: 5.
 	^ view.
+]
+
+{ #category : #'as yet unclassified' }
+HotelExamples >> edgeStyle [
+	| style |
+	style := BlLineElement new
+					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2).
+	^ style.
 ]
 
 { #category : #examples }
@@ -112,4 +114,18 @@ HotelExamples >> layoutForTree [
 	self assert: (view root layout isKindOf: BlOnceLayout).
 	self assert: (view root layout layout isKindOf: GtGradVerticalTreeLayout).
 	^ view.
+]
+
+{ #category : #'as yet unclassified' }
+HotelExamples >> nodeStyleWithText: aText andFontSize: aFontSize andSize: aSize [
+	| style |
+	style := BlTextElement new 
+					text: (aText asString asRopedText 
+						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: aFontSize);
+					geometry: BlRectangle new;
+					border: (BlBorder paint: Color black);
+					background: Color paleOrange;
+					size: aSize;
+					constraintsDo: [ :c | c padding: (BlInsets all: 10) ].
+	^ style.
 ]
