@@ -61,6 +61,14 @@ Hotel >> availableRoomsFrom: aBeginDate to: anEndDate for: aCapacity [
 	^ res.
 ]
 
+{ #category : #'as yet unclassified' }
+Hotel >> edgeStyle [
+	| style |
+	style := BlLineElement new
+					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2).
+	^ style.
+]
+
 { #category : #accessing }
 Hotel >> gtRoomsFor: aView [
 	<gtView>
@@ -73,6 +81,45 @@ Hotel >> gtRoomsFor: aView [
 			item: [:aRoom | aRoom capacity].
 ]
 
+{ #category : #ui }
+Hotel >> gtTreeFor: aView [
+	<gtView>
+	^ aView mondrian
+		title: 'Tree' translated;
+		painting: [ :view |
+			view nodes 
+				shape: [ :x | 
+					self nodeStyleWithText: (x name) andFontSize: 10 andSize: (50 @ 9)];
+			with: { self }.
+			view nodes 
+				shape: [ :x | 
+					self nodeStyleWithText: (x capacity) andFontSize: 8 andSize: (8 @ 8)];
+			with: self rooms.
+			view nodes 
+				shape: [ :x |
+					|beginDate endDate|
+					beginDate := x getBeginDate.
+					endDate := x getEndDate.
+					self nodeStyleWithText: ((beginDate dayOfMonth asString,' ',beginDate monthName asString,
+						' - ', endDate dayOfMonth asString,' ',endDate monthName asString) asString asRopedText
+						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 7) andFontSize: 7 						andSize: (50 @ 8)];
+			with: self allReservations.
+			view edges 
+				fromCenterBottom;
+				toCenterTop;
+				shape: [ :x |
+					self edgeStyle];
+				connect: { self } from: [:h | h] toAll: [:h | h rooms].
+			view edges
+				fromCenterBottom; 
+				toCenterTop;
+				shape: [ :x |
+					self edgeStyle];
+				connect: (self rooms) from: [ :r | r ] toAll: [:r | r reservations].
+			view layout tree.
+			]
+]
+
 { #category : #initialization }
 Hotel >> initialize [
 	super initialize.
@@ -82,6 +129,20 @@ Hotel >> initialize [
 { #category : #accessing }
 Hotel >> name [
 	^ name.
+]
+
+{ #category : #'as yet unclassified' }
+Hotel >> nodeStyleWithText: aText andFontSize: aFontSize andSize: aSize [
+	| style |
+	style := BlTextElement new 
+					text: (aText asString asRopedText 
+						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: aFontSize);
+					geometry: BlRectangle new;
+					border: (BlBorder paint: Color black);
+					background: Color paleOrange;
+					size: aSize;
+					constraintsDo: [ :c | c padding: (BlInsets all: 10) ].
+	^ style.
 ]
 
 { #category : #accessing }

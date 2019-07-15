@@ -12,41 +12,58 @@ HotelExamples >> addTreeNodesAndEdges [
 	hotel := self hotelWithFourRoomsAndReservation.
 	view nodes 
 		shape: [ :x | 
-			self nodeStyleWithText: (x name) andFontSize: 10 andSize: (50 @ 10)];
+			BlTextElement new 
+					text: ((x name) asString asRopedText 
+						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 10);
+					geometry: BlRectangle new;
+					border: (BlBorder paint: Color black);
+					background: Color paleOrange;
+					size: (50 @ 9);
+					constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
 		with: { hotel }.
 	view nodes 
 		shape: [ :x | 
-			self nodeStyleWithText: (x capacity) andFontSize: 8 andSize: (8 @ 8)];
+			BlTextElement new 
+					text: ((x capacity) asString asRopedText 
+						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 8);
+					geometry: BlRectangle new;
+					border: (BlBorder paint: Color black);
+					background: Color paleOrange;
+					size: (8 @ 8);
+					constraintsDo: [ :c | c padding: (BlInsets all: 10) ].];
 		with: hotel rooms.
 	view nodes 
-		shape: [ :x | 
-			self nodeStyleWithText: (x getBeginDate asString,' - ',x getEndDate asString) andFontSize: 7 andSize: (90 @ 10)];
+		shape: [ :x |
+			| beginDate endDate |
+			beginDate := x getBeginDate.
+			endDate := x getEndDate.
+			BlTextElement new 
+					text: ((beginDate dayOfMonth asString,' ',beginDate monthName asString,
+					' - ', endDate dayOfMonth asString,' ',endDate monthName asString) asString asRopedText 
+						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 7);
+					geometry: BlRectangle new;
+					border: (BlBorder paint: Color black);
+					background: Color paleOrange;
+					size: (50 @ 8);
+					constraintsDo: [ :c | c padding: (BlInsets all: 10)]];
 		with: hotel allReservations.
-	self assert:
-		view topStep root children size equals: 6. "(hotel rooms size + hotel allReservations size + 1)"
+	self assert: view topStep root children size equals: 6.
 	view edges 
 		fromCenterBottom;
 		toCenterTop;
 		shape: [ :x |
-			self edgeStyle];
+			BlLineElement new
+					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2)];
 		connect: { hotel } from: [:h | h] toAll: [:h | h rooms].
 	view edges
 		fromCenterBottom; 
 		toCenterTop;
 		shape: [ :x |
-			self edgeStyle];
+			BlLineElement new
+					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2)];
 		connect: (hotel rooms) from: [ :r | r ] toAll: [:r | r reservations].
 	self assert: view topStep root graph edgeChildren size equals: 5.
-	"(hotel rooms size + hotel allReservations size)"
 	^ view.
-]
-
-{ #category : #'as yet unclassified' }
-HotelExamples >> edgeStyle [
-	| style |
-	style := BlLineElement new
-					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2).
-	^ style.
 ]
 
 { #category : #examples }
@@ -114,18 +131,4 @@ HotelExamples >> layoutForTree [
 	self assert: (view root layout isKindOf: BlOnceLayout).
 	self assert: (view root layout layout isKindOf: GtGradVerticalTreeLayout).
 	^ view.
-]
-
-{ #category : #'as yet unclassified' }
-HotelExamples >> nodeStyleWithText: aText andFontSize: aFontSize andSize: aSize [
-	| style |
-	style := BlTextElement new 
-					text: (aText asString asRopedText 
-						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: aFontSize);
-					geometry: BlRectangle new;
-					border: (BlBorder paint: Color black);
-					background: Color paleOrange;
-					size: aSize;
-					constraintsDo: [ :c | c padding: (BlInsets all: 10) ].
-	^ style.
 ]
