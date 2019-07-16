@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+Reservation >> dateAsDayMonthString: aDate [
+	| day month |
+	day := aDate dayOfMonth asString.
+	month := aDate monthName asString.
+	^ day,' ',month.
+]
+
+{ #category : #'as yet unclassified' }
 Reservation >> getBeginDate [
 	^ beginDate.
 ]

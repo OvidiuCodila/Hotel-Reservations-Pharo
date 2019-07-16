@@ -97,12 +97,8 @@ Hotel >> gtTreeFor: aView [
 			with: self rooms.
 			view nodes 
 				shape: [ :x |
-					|beginDate endDate|
-					beginDate := x getBeginDate.
-					endDate := x getEndDate.
-					self nodeStyleWithText: ((beginDate dayOfMonth asString,' ',beginDate monthName asString,
-						' - ', endDate dayOfMonth asString,' ',endDate monthName asString) asString asRopedText
-						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 7) andFontSize: 7 						andSize: (50 @ 8)];
+					self nodeStyleWithText: ((x dateAsDayMonthString: (x getBeginDate)),' - ',
+						(x dateAsDayMonthString: (x getEndDate))) andFontSize: 7 andSize: (50 @ 8)];
 			with: self allReservations.
 			view edges 
 				fromCenterBottom;
