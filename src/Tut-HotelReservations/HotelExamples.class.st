@@ -1,3 +1,40 @@
+"
+!Hotel Basics
+
+Hotel is a class made for an easy way of managing hotels. A hotel has a name, to be easily identified and a list of the rooms it has. As its main responsibilities it can: add more rooms to the hotel, add reservations to those rooms and check if there are available rooms for a specified period and number of people.
+
+Its main collaborator is the Room class, that stores a room from the hotel with its according reservations.
+You can learn more about it here: ${class:RoomExamples}$.
+
+To get a better idea of what this is about, we will consider some examples.
+
+!!Hotel Examples
+
+First we will create a new hotel, without rooms and set its name.
+
+${example:HotelExamples>>#hotelWithoutRooms|previewExpanded}$
+
+Then we can add a room to our newly created hotel.
+
+${example:HotelExamples>>#hotelWithOneRoom|previewExpanded}$
+
+After that we add a reservation to the hotel. The reservation is added to the first room that is available and fits the number of people. And we can see the reservation is made by checking if the hotel has a free room for the same perios and number of people.
+
+${example:HotelExamples>>#hotelWithFourRoomsAndReservation|previewExpanded}$
+
+!!Custom views
+
+To have a better understanding of the design, we implemented some custom views.
+One of them uses the Mondrian engine to create a tree view.
+
+First we added the nodes: the hotel, the rooms and the reservations, and the edges between them.
+
+${example:HotelExamples>>#addTreeNodesAndEdges|previewExpanded}$
+
+And then we lay them out.
+
+${example:HotelExamples>>#layoutForTree|previewExpanded}$
+"
 Class {
 	#name : #HotelExamples,
 	#superclass : #Object,
@@ -12,55 +49,29 @@ HotelExamples >> addTreeNodesAndEdges [
 	hotel := self hotelWithFourRoomsAndReservation.
 	view nodes 
 		shape: [ :x | 
-			BlTextElement new 
-					text: ((x name) asString asRopedText 
-						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 10);
-					geometry: BlRectangle new;
-					border: (BlBorder paint: Color black);
-					background: Color paleOrange;
-					size: (50 @ 9);
-					constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
+			hotel nodeStyleWithText: (x name) andFontSize: 10 andSize: (50 @ 9) ];
 		with: { hotel }.
 	view nodes 
 		shape: [ :x | 
-			BlTextElement new 
-					text: ((x capacity) asString asRopedText 
-						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 8);
-					geometry: BlRectangle new;
-					border: (BlBorder paint: Color black);
-					background: Color paleOrange;
-					size: (8 @ 8);
-					constraintsDo: [ :c | c padding: (BlInsets all: 10) ].];
+			hotel nodeStyleWithText: (x capacity) andFontSize: 8 andSize: (8 @ 8)];
 		with: hotel rooms.
 	view nodes 
 		shape: [ :x |
-			| beginDate endDate |
-			beginDate := x getBeginDate.
-			endDate := x getEndDate.
-			BlTextElement new 
-					text: ((beginDate dayOfMonth asString,' ',beginDate monthName asString,
-					' - ', endDate dayOfMonth asString,' ',endDate monthName asString) asString asRopedText 
-						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 7);
-					geometry: BlRectangle new;
-					border: (BlBorder paint: Color black);
-					background: Color paleOrange;
-					size: (50 @ 8);
-					constraintsDo: [ :c | c padding: (BlInsets all: 10)]];
+			hotel nodeStyleWithText: ((x dateAsDayMonthString: (x getBeginDate)),' - ',
+			(x dateAsDayMonthString: (x getEndDate))) andFontSize: 7 andSize: (50 @ 8)];
 		with: hotel allReservations.
 	self assert: view topStep root children size equals: 6.
 	view edges 
 		fromCenterBottom;
 		toCenterTop;
 		shape: [ :x |
-			BlLineElement new
-					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2)];
+			hotel edgeStyle ];
 		connect: { hotel } from: [:h | h] toAll: [:h | h rooms].
 	view edges
 		fromCenterBottom; 
 		toCenterTop;
 		shape: [ :x |
-			BlLineElement new
-					border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2)];
+			hotel edgeStyle ];
 		connect: (hotel rooms) from: [ :r | r ] toAll: [:r | r reservations].
 	self assert: view topStep root graph edgeChildren size equals: 5.
 	^ view.
@@ -96,7 +107,7 @@ HotelExamples >> hotelWithOneRoom [
 	| hotel |
 	hotel := self hotelWithoutRooms.
 	hotel addRoomFor: 4.
-	self assert: (hotel availableRoomsFrom: Date today to: Date today + 2 days for: 4) size equals: 1.
+	self assert: hotel rooms size equals: 1.
 	^ hotel.
 ]
 
@@ -106,9 +117,10 @@ HotelExamples >> hotelWithOneRoomAndOneReservation [
 	| hotel |
 	hotel := self hotelWithOneRoom.
 	hotel addReservationFor: 4 from: Date today to: Date today + 1 days.
-	self assert: (hotel availableRoomsFrom: Date today to: Date today + 2 days for: 7) size equals: 0.
-	self assert: (hotel availableRoomsFrom: Date today to: Date today + 2 days for: 4) size equals: 0.
-	self assert: (hotel availableRoomsFrom: Date today + 2 days to: Date today + 4 days for: 4) size 		equals: 1.
+	self assert: 
+		(hotel availableRoomsFrom: Date today to: Date today + 2 days for: 4) size equals: 0.
+	self assert: 
+		(hotel availableRoomsFrom: Date today + 2 days to: Date today + 4 days for: 4) size equals: 1.
 	^ hotel.
 ]
 

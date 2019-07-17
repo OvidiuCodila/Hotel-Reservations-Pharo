@@ -1,3 +1,6 @@
+"
+I represent a room inside of a hotel and i can store reservations made to that hotel.
+"
 Class {
 	#name : #Room,
 	#superclass : #Object,

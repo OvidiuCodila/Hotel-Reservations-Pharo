@@ -1,3 +1,8 @@
+"
+!Hotel
+
+I represent a way of managing a system based on hotel with rooms and reservations.
+"
 Class {
 	#name : #Hotel,
 	#superclass : #Object,
@@ -75,7 +80,7 @@ Hotel >> gtRoomsFor: aView [
 	^ aView columnedList
 		title: 'Rooms' translated;
 		items: [rooms];
-		column: 'Name' translated
+		column: 'Number' translated
 			item: [:aRoom | aRoom name];
 		column: 'Capacity' translated
 			item: [:aRoom | aRoom capacity].

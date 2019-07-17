@@ -1,3 +1,6 @@
+"
+I represent a reservation made for a room inside a hotel.
+"
 Class {
 	#name : #Reservation,
 	#superclass : #Object,
