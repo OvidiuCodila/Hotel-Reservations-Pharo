@@ -90,7 +90,6 @@ GtViewsPresentationExamples >> inspectorOnHotelObjectExample [
 
 { #category : #accessing }
 GtViewsPresentationExamples >> inspectorViewsExplanationText [
-	<gtExample>
 	| text |
 	text := 
 		'
@@ -107,6 +106,71 @@ GtViewsPresentationExamples >> inspectorViewsExplanationText [
 		' and a graph like view that shows the hotel as a ' asRopedText,
 		('Tree' asRopedText glamorousExplanationFor: #Tree),
 		'.' asRopedText.
+		
+	^text
+		glamorousRegularFont;
+		foreground: Color black.
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> pragmasMetricsViewExample [
+	<gtExample>
+	| container inspectorContainer subject inspectorHeader editor inspectorView |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		margin: (BlInsets all: 10);
+		look: BrShadowLook.
+	container := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal.
+	container explainer isExplanationHolder: true.
+	subject := ((#gtView gtPragmas) gtMetricsFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject forceLayout.
+	"inspectorHeader := subject phlow firstChildWithView.
+	inspectorView := inspectorHeader viewContentElement phlow
+		firstChildWithView.
+	"inspectorContainer addChild: subject."
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				geometry: BlCircle new;
+				size: 30 @ 30;
+				elevation: (BlRelativeElevation elevation: 10);
+				look: (GtExplainerTargetLook new explanationModel: #lines);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (inspectorView localPointToGlobal: 10 @ 70)))."
+	editor := BrEditor new
+		look: BrGlamorousRegularEditorLook;
+		text: self pragmasMetricsViewExplanationText;
+		margin: (BlInsets all: 10);
+		constraintsDo: [ :c | 
+			c vertical matchParent.
+			c horizontal matchParent.
+			c linear weight: 0.3 ].
+	container addChild: editor.
+	container addChild: inspectorContainer.
+	^ container
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> pragmasMetricsViewExplanationText [
+	| text |
+	text := 
+		'
+
+
+Inspecting the same querry, if we look at the Metrics view, which is another custom one,' asRopedText,
+		' we can see that on average, a view method takes around 12 ' asRopedText,
+		('lines' asRopedText glamorousExplanationFor: #lines),
+		' of code.' asRopedText.
 		
 	^text
 		glamorousRegularFont;

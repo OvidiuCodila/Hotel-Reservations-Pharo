@@ -7,6 +7,27 @@ Class {
 	#category : #'GToolkit-Demo-CustomViews'
 }
 
+{ #category : #'as yet unclassified' }
+GtViews101 >> contactsInAddressBookExample [
+	^ ((GtABCartoonAddressBookExample new cartoonAddressBook gtViewContactsCardsListOn: GtPhlowView empty) 
+		asElementDo: [:e |
+			BlElement new
+				look: BrShadowLook;
+				background: Color white;
+				margin: (BlInsets all: 20);
+				addChild: e]) size: 400@400.
+]
+
+{ #category : #'as yet unclassified' }
+GtViews101 >> contactsInAddressBookViewCode [
+	^ (((GtABAddressBook>>#gtViewContactsCardsListOn:) gtSourceFor: GtPhlowView empty) asElementDo: [:e |
+		BlElement new
+			look: BrShadowLook;
+			background: Color white;
+			margin: (BlInsets all: 20);
+			addChild: e]) size: 400@400.
+]
+
 { #category : #'api - instantiation' }
 GtViews101 >> create [
 	| show |
@@ -61,15 +82,20 @@ GtViews101 >> create [
 					fontSize: 20;
 					foreground: Color gray)).
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new pragmasMetricsViewExample"]).
+			element: [GtViewsPresentationExamples new pragmasMetricsViewExample]).
 		(GtTextSlide new
 			firstTextWithFormat:
-				('Now lets use an address book and we want to see the contacts in it' 
+				('Now lets use an address book.' 
+					asRopedText
+					glamorousRegularFont;
+					fontSize: 20);
+			secondTextWithFormat:
+				('And lets say we want to see the contacts in it.'
 					asRopedText
 					glamorousRegularFont;
 					fontSize: 20)).
 		(GtTextAndElementSlide new
-			element: ["self contactsInAddressBookViewCode"];
+			element: [self contactsInAddressBookViewCode];
 			textWithFormat:
 				('So in 16 lines of code'
 					asRopedText
@@ -77,7 +103,7 @@ GtViews101 >> create [
 					foreground: Color gray;
 					fontSize: 20)).
 		(GtTextAndElementSlide new
-			element: ["self contactsInAddressBookExample"];
+			element: [self contactsInAddressBookExample];
 			textWithFormat:
 				('we got a helpful visualization'
 					asRopedText
@@ -89,8 +115,7 @@ GtViews101 >> create [
 				('Now lets see how do we create these views'
 					asRopedText
 					glamorousRegularFont;
-					fontSize: 20;
-					foreground: Color gray)).
+					fontSize: 20)).
 		(GtElementSlide new
 			element: ["GtViewsPresentationExamples new gtViewCodeExample"]).
 		(GtElementSlide new
