@@ -117,7 +117,7 @@ GtViews101 >> create [
 					glamorousRegularFont;
 					fontSize: 20)).
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new gtViewCodeExample"]).
+			element: ["GtViewsPresentationExamples new viewCodeExample"]). "contactsListExample"
 		(GtElementSlide new
 			element: ["GtViewsPresentationExamples new gtViewColumnedListCodeExample"]).
 		(GtElementSlide new
