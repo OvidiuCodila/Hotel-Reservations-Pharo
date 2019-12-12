@@ -181,7 +181,7 @@ GtViewsPresentationExamples >> viewCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((Hotel>>#gtRoomsFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject := ((Archive>>#gtMembersFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectorContainer
@@ -191,10 +191,54 @@ GtViewsPresentationExamples >> viewCodeExample [
 				size: 10 @ 10;
 				elevation: (BlRelativeElevation elevation: 10);
 				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #Tree);
+				look: (GtExplainerTargetLook new explanationModel: #getView);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 133 @ 28))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #returnView);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 68 @ 56))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #gtView);
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 50 @ 40))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #title);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 83 @ 70))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #types);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewCodeExplanationText;
@@ -211,5 +255,162 @@ GtViewsPresentationExamples >> viewCodeExample [
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewCodeExplanationText [
 	| text |
-	^ text asRopedText.
+	text := '
+	
+	Every method gets a ' asRopedText,
+	('view' asRopedText glamorousExplanationFor: #getView),
+	' object as a parameter and returns a ' asRopedText,
+	('view' asRopedText glamorousExplanationFor: #returnView),
+	'object.
+	Then, the first thing mentioned is the ' asRopedText,
+	('gtView' asRopedText glamorousExplanationFor: #gtView),
+	'pragma.
+	The returned view gets a ' asRopedText,
+	('title' asRopedText glamorousExplanationFor: #title),
+	' to be easily identified and a type.
+	There are lots of ' asRopedText,
+	('types' asRopedText glamorousExplanationFor: #types),
+	' for the views. Next we will take a look at some of them.' asRopedText.
+	
+	^ text
+		glamorousRegularFont;
+		foreground: Color black.
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> viewColumnedListCodeExample [
+	<gtExample>
+	| container inspectorContainer subject editor  |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		margin: (BlInsets all: 10);
+		look: BrShadowLook.
+	container := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal.
+	container explainer isExplanationHolder: true.
+	subject := ((Archive>>#gtMembersFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject forceLayout.
+	inspectorContainer addChild: subject.
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #list);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #items);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
+	editor := BrEditor new
+		look: BrGlamorousRegularEditorLook;
+		text: self viewColumnedListCodeExplanationText;
+		margin: (BlInsets all: 10);
+		constraintsDo: [ :c | 
+			c vertical matchParent.
+			c horizontal matchParent.
+			c linear weight: 0.3 ].
+	container addChild: editor.
+	container addChild: inspectorContainer.
+	^ container
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> viewColumnedListCodeExplanationText [
+	| text |
+	text := '' asRopedText.
+	
+	^ text
+		glamorousRegularFont;
+		foreground: Color black.
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> viewListCodeExample [
+	<gtExample>
+	| container inspectorContainer subject editor  |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		margin: (BlInsets all: 10);
+		look: BrShadowLook.
+	container := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal.
+	container explainer isExplanationHolder: true.
+	subject := ((Archive>>#gtMembersFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject forceLayout.
+	inspectorContainer addChild: subject.
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #list);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #items);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
+	editor := BrEditor new
+		look: BrGlamorousRegularEditorLook;
+		text: self viewListCodeExplanationText;
+		margin: (BlInsets all: 10);
+		constraintsDo: [ :c | 
+			c vertical matchParent.
+			c horizontal matchParent.
+			c linear weight: 0.3 ].
+	container addChild: editor.
+	container addChild: inspectorContainer.
+	^ container
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> viewListCodeExplanationText [
+	| text |
+	
+	text := '
+	If we want to make a ' asRopedText,
+	('list' asRopedText glamorousExplanationFor: #list),
+	' view, besides the title, we need to mention the ' asRopedText,
+	('items' asRopedText glamorousExplanationFor: #items),
+	'the list will consist of.' asRopedText.
+	
+	^ text
+		glamorousRegularFont;
+		foreground: Color black.
 ]

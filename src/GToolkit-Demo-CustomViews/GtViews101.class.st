@@ -117,15 +117,15 @@ GtViews101 >> create [
 					glamorousRegularFont;
 					fontSize: 20)).
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new viewCodeExample"]). "contactsListExample"
+			element: [GtViewsPresentationExamples new viewCodeExample]).
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new gtViewColumnedListCodeExample"]).
+			element: [GtViewsPresentationExamples new viewListCodeExample]).	
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new gtViewListCodeExample"]).
+			element: ["GtViewsPresentationExamples new viewColumnedListCodeExample"]).
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new gtViewMondrianCodeExample"]).
+			element: ["GtViewsPresentationExamples new viewMondrianCodeExample"]).
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new gtViewExplicitCodeExample"]) }.
+			element: ["GtViewsPresentationExamples new viewExplicitCodeExample"]) }.
 	
 	^ show
 ]
