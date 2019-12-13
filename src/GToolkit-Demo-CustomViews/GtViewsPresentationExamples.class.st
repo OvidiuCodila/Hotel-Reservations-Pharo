@@ -181,7 +181,7 @@ GtViewsPresentationExamples >> viewCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((Archive>>#gtMembersFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject := ((GtComputersNetwork>>#gtNetworksIpsViewFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectorContainer
@@ -295,7 +295,8 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((Archive>>#gtMembersFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject := ((GtComputersNetwork>>#gtNetworksComputersViewFor:) gtSourceFor: GtPhlowView empty) 
+		asElementDo: [ :e | e ].
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectorContainer
@@ -361,7 +362,7 @@ GtViewsPresentationExamples >> viewListCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((Archive>>#gtMembersFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject := ((GtComputersNetwork>>#gtNetworksIpsViewFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectorContainer
@@ -409,6 +410,73 @@ GtViewsPresentationExamples >> viewListCodeExplanationText [
 	' view, besides the title, we need to mention the ' asRopedText,
 	('items' asRopedText glamorousExplanationFor: #items),
 	'the list will consist of.' asRopedText.
+	
+	^ text
+		glamorousRegularFont;
+		foreground: Color black.
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> viewMondrianCodeExample [
+	<gtExample>
+	| container inspectorContainer subject editor  |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		margin: (BlInsets all: 10);
+		look: BrShadowLook.
+	container := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal.
+	container explainer isExplanationHolder: true.
+	subject := ((GtComputersNetwork>>#gtSchematicViewFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject forceLayout.
+	inspectorContainer addChild: subject.
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #list);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #items);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
+	editor := BrEditor new
+		look: BrGlamorousRegularEditorLook;
+		text: self viewMondrianCodeExplanationText;
+		margin: (BlInsets all: 10);
+		constraintsDo: [ :c | 
+			c vertical matchParent.
+			c horizontal matchParent.
+			c linear weight: 0.3 ].
+	container addChild: editor.
+	container addChild: inspectorContainer.
+	^ container
+]
+
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> viewMondrianCodeExplanationText [
+	| text |
+	
+	text := '' asRopedText.
 	
 	^ text
 		glamorousRegularFont;

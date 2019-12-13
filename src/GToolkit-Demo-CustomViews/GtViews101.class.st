@@ -118,14 +118,29 @@ GtViews101 >> create [
 					fontSize: 20)).
 		(GtElementSlide new
 			element: [GtViewsPresentationExamples new viewCodeExample]).
+		"(GtTextAndElementSlide new
+			element: [];
+			text: '' asRopedText)."
 		(GtElementSlide new
-			element: [GtViewsPresentationExamples new viewListCodeExample]).	
+			element: [GtViewsPresentationExamples new viewListCodeExample]).
+		"(GtTextAndElementSlide new
+			element: [];
+			text: '' asRopedText)."
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new viewColumnedListCodeExample"]).
+			element: [GtViewsPresentationExamples new viewColumnedListCodeExample]).
+		"(GtTextAndElementSlide new
+			element: [];
+			text: '' asRopedText)."
 		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new viewMondrianCodeExample"]).
-		(GtElementSlide new
-			element: ["GtViewsPresentationExamples new viewExplicitCodeExample"]) }.
+			element: [GtViewsPresentationExamples new viewMondrianCodeExample]).
+		"(GtTextAndElementSlide new
+			element: [];
+			text: '' asRopedText)."
+		"(GtElementSlide new
+			element: [GtViewsPresentationExamples new viewExplicitCodeExample])."
+		"(GtTextAndElementSlide new
+			element: [];
+			text: '' asRopedText)" }.
 	
 	^ show
 ]

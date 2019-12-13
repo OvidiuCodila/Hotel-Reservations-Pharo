@@ -2,50 +2,53 @@
 I model a computer network. I have more computers connected between them.
 "
 Class {
-	#name : #ComputersNetwork,
+	#name : #GtComputersNetwork,
 	#superclass : #Object,
 	#instVars : [
-		'computers',
-		'name'
+		'name',
+		'computers'
 	],
 	#category : #'GToolkit-Demo-ComputersNetwork'
 }
 
 { #category : #adding }
-ComputersNetwork >> addComputer: aComputer [
+GtComputersNetwork >> addComputer: aComputer [
 	computers add: aComputer.
 ]
 
 { #category : #accessing }
-ComputersNetwork >> computers [
+GtComputersNetwork >> computers [
 	^ computers.
 ]
 
 { #category : #'as yet unclassified' }
-ComputersNetwork >> gtNetworksComputersViewFor: aView [
+GtComputersNetwork >> gtNetworksComputersViewFor: aView [
 	<gtView>
 	
 	^ aView columnedList
 		title: 'Computers' translated;
 		items: [ self computers ];
 		column: 'Name' translated
-			item: [:aComputer | aComputer name ];
+			item: [:aComputer | 
+				aComputer name ];
 		column: 'Ip' translated
-			item: [:aComputer | aComputer ip ].
+			item: [:aComputer | 
+				aComputer ip ].
 ]
 
 { #category : #'as yet unclassified' }
-ComputersNetwork >> gtNetworksIpsViewFor: aView [
+GtComputersNetwork >> gtNetworksIpsViewFor: aView [
 	<gtView>
 	
 	^ aView list
 		title: 'Ips' translated;
-		items: [ self computers collect: [:aComputer |
+		items: [ self computers 
+			collect: [:aComputer |
 				aComputer ip ]].
 ]
 
 { #category : #'as yet unclassified' }
-ComputersNetwork >> gtSchematicViewFor: aView [
+GtComputersNetwork >> gtSchematicViewFor: aView [
 	<gtView>
 	
 	^ aView mondrian
@@ -55,13 +58,15 @@ ComputersNetwork >> gtSchematicViewFor: aView [
 				shape: [:x | 
 					BlTextElement new 
 					text: (x name asRopedText 
-						attributes: {BlTextForegroundAttribute paint: Color black}; fontSize: 10);
+						glamorousRegularFont;
+						foreground: Color black;
+						fontSize: 10);
 					geometry: BlEllipse new;
 					border: (BlBorder paint: Color green);
 					background: Color paleGreen;
 					size: 40 @ 10;
 					constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
-				with: {self}.
+				with: { self }.
 			view nodes
 				shape: [:x |
 					BlTextElement new 
@@ -80,24 +85,24 @@ ComputersNetwork >> gtSchematicViewFor: aView [
 				toCenterTop;
 				shape: [:x |
 					BlLineElement new
-						border: (BlBorder paint: (Color blue alpha: 0.8) width: 1.2)];
-				connect: { self } from: [:n | n] to: [:n | n computers].
-			view layout circle].
+						border: (BlBorder paint: (Color blue alpha: 0.3) width: 1.2)];
+				connect: { self } from: [:n | n] toAll: [:n | n computers].
+			view layout tree].
 ]
 
 { #category : #initialization }
-ComputersNetwork >> initialize [
+GtComputersNetwork >> initialize [
 	super initialize.
 	name := '' asRopedText.
 	computers := OrderedCollection new.
 ]
 
 { #category : #accessing }
-ComputersNetwork >> name [
+GtComputersNetwork >> name [
 	^ name.
 ]
 
 { #category : #accessing }
-ComputersNetwork >> name: aName [
+GtComputersNetwork >> name: aName [
 	name := aName.
 ]

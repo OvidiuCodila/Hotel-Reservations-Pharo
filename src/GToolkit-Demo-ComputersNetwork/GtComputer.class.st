@@ -2,7 +2,7 @@
 I model a simple computer, defined by its name and ip.
 "
 Class {
-	#name : #Computer,
+	#name : #GtComputer,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -12,21 +12,21 @@ Class {
 }
 
 { #category : #accessing }
-Computer >> ip [
+GtComputer >> ip [
 	^ ip.
 ]
 
 { #category : #accessing }
-Computer >> ip: anIp [
+GtComputer >> ip: anIp [
 	ip := anIp.
 ]
 
 { #category : #accessing }
-Computer >> name [
+GtComputer >> name [
 	^ name.
 ]
 
 { #category : #accessing }
-Computer >> name: aName [
+GtComputer >> name: aName [
 	name := aName.
 ]
