@@ -488,7 +488,7 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 				size: 10 @ 10;
 				elevation: (BlRelativeElevation elevation: 10);
 				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #list);
+				look: (GtExplainerTargetLook new explanationModel: #mondrian);
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
@@ -499,10 +499,98 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 				size: 10 @ 10;
 				elevation: (BlRelativeElevation elevation: 10);
 				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #items);
+				look: (GtExplainerTargetLook new explanationModel: #painting);
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #nodes);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 115 @ 98))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #nodeShape);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 112))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #nodeValues);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 168))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #edges);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 115 @ 267))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #edgeShape);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 308))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #connection);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 365))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #spot);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 279))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #layout);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 115 @ 392))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewMondrianCodeExplanationText;
@@ -520,7 +608,31 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 GtViewsPresentationExamples >> viewMondrianCodeExplanationText [
 	| text |
 	
-	text := '' asRopedText.
+	text := '
+	The ' asRopedText,
+	('mondrian' asRopedText glamorousExplanationFor: #mondrian),
+	' view has a ' asRopedText,
+	('painting' asRopedText glamorousExplanationFor: #painting),
+	'message where we specify the following things.
+	The ' asRopedText,
+	('nodes' asRopedText glamorousExplanationFor: #nodes),
+	', to which we give a ' asRopedText,
+	('shape' asRopedText glamorousExplanationFor: #nodeShape),
+	' and ' asRopedText,
+	('values' asRopedText glamorousExplanationFor: #nodeValues),
+	'.
+	The ' asRopedText,
+	('edges' asRopedText glamorousExplanationFor: #edges),
+	', to which we give a ' asRopedText,
+	('shape' asRopedText glamorousExplanationFor: #edgeShape),
+	', the values and how to ' asRopedText,
+	('connect' asRopedText glamorousExplanationFor: #connection),
+	' them and a ' asRopedText,
+	('spot' asRopedText glamorousExplanationFor: #spot),
+	' where to connect them to the nodes.
+	And finally the ' asRopedText,
+	('layout' asRopedText glamorousExplanationFor: #layout),
+	' that says how to arrange the nodes on the screen.' asRopedText.
 	
 	^ text
 		glamorousRegularFont;

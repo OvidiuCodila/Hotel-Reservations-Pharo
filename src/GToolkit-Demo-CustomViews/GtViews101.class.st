@@ -7,27 +7,6 @@ Class {
 	#category : #'GToolkit-Demo-CustomViews'
 }
 
-{ #category : #'as yet unclassified' }
-GtViews101 >> contactsInAddressBookExample [
-	^ ((GtABCartoonAddressBookExample new cartoonAddressBook gtViewContactsCardsListOn: GtPhlowView empty) 
-		asElementDo: [:e |
-			BlElement new
-				look: BrShadowLook;
-				background: Color white;
-				margin: (BlInsets all: 20);
-				addChild: e]) size: 400@400.
-]
-
-{ #category : #'as yet unclassified' }
-GtViews101 >> contactsInAddressBookViewCode [
-	^ (((GtABAddressBook>>#gtViewContactsCardsListOn:) gtSourceFor: GtPhlowView empty) asElementDo: [:e |
-		BlElement new
-			look: BrShadowLook;
-			background: Color white;
-			margin: (BlInsets all: 20);
-			addChild: e]) size: 400@400.
-]
-
 { #category : #'api - instantiation' }
 GtViews101 >> create [
 	| show |
@@ -95,17 +74,19 @@ GtViews101 >> create [
 					glamorousRegularFont;
 					fontSize: 20)).
 		(GtTextAndElementSlide new
-			element: [self contactsInAddressBookViewCode];
+			element: [self makeAsBlElement: 
+				((GtABAddressBook>>#gtViewContactsIconsCircularOn:) gtSourceFor: GtPhlowView empty)];
 			textWithFormat:
-				('So in 16 lines of code'
+				('So in only 13 lines of code'
 					asRopedText
 					glamorousRegularFont;
 					foreground: Color gray;
 					fontSize: 20)).
 		(GtTextAndElementSlide new
-			element: [self contactsInAddressBookExample];
+			element: [self makeAsBlElement: 
+				(GtABCartoonAddressBookExample new cartoonAddressBook gtViewContactsIconsCircularOn: GtPhlowView empty)];
 			textWithFormat:
-				('we got a helpful visualization'
+				('we got an interesting visualization'
 					asRopedText
 					glamorousRegularFont;
 					foreground: Color gray;
@@ -135,12 +116,7 @@ GtViews101 >> create [
 		(GtTextAndElementSlide new
 			element: [self makeAsBlElement: 
 				(GtComputersNetworkExamples new networkWithThreeComputers gtSchematicViewFor: GtPhlowView empty)];
-			text: 'Mondrian view example' asRopedText).
-		"(GtElementSlide new
-			element: [GtViewsPresentationExamples new viewExplicitCodeExample])."
-		"(GtTextAndElementSlide new
-			element: [];
-			text: '' asRopedText)" }.
+			text: 'Mondrian view example' asRopedText) }.
 	
 	^ show
 ]

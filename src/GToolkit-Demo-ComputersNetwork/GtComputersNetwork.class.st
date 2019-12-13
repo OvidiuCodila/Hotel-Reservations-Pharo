@@ -48,23 +48,16 @@ GtComputersNetwork >> gtNetworksIpsViewFor: aView [
 { #category : #'as yet unclassified' }
 GtComputersNetwork >> gtSchematicViewFor: aView [
 	<gtView>
-	
 	^ aView mondrian
 		title: 'Schematic' translated;
 		painting: [ :view | 
 			view nodes
 				shape: [:x | 
-					BlTextElement new 
-					text: (x name asRopedText glamorousRegularFont; foreground: Color black; fontSize: 10);
-					geometry: BlEllipse new; border: (BlBorder paint: Color green); background: Color paleGreen;
-					size: 40 @ 10; constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
+					self viewNodeShapeOfSize: (40 @ 10) withText: (x name) ofFontSize: 10];
 				with: { self }.
 			view nodes
 				shape: [:x |
-					BlTextElement new 
-					text: (x ip asRopedText glamorousRegularFont; foreground: Color gray; fontSize: 8);
-					geometry: BlEllipse new; border: (BlBorder paint: Color green); background: Color paleGreen;
-					size: 60 @ 10; constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
+					self viewNodeShapeOfSize: (60 @ 10) withText: (x ip) ofFontSize: 8];
 				with: self computers.
 			view edges
 				fromCenterBottom; toCenterTop;
@@ -89,4 +82,17 @@ GtComputersNetwork >> name [
 { #category : #accessing }
 GtComputersNetwork >> name: aName [
 	name := aName.
+]
+
+{ #category : #'as yet unclassified' }
+GtComputersNetwork >> viewNodeShapeOfSize: aSize withText: aText ofFontSize: aFontSize [
+	^ BlTextElement new 
+					text: (aText asRopedText 
+						glamorousRegularFont;
+						foreground: Color black;
+						fontSize: aFontSize);
+					geometry: BlEllipse new;
+					border: (BlBorder paint: Color green); 
+					background: Color paleGreen;
+					size: aSize; constraintsDo: [ :c | c padding: (BlInsets all: 10) ].
 ]
