@@ -24,7 +24,6 @@ GtComputersNetwork >> computers [
 { #category : #'as yet unclassified' }
 GtComputersNetwork >> gtNetworksComputersViewFor: aView [
 	<gtView>
-	
 	^ aView columnedList
 		title: 'Computers' translated;
 		items: [ self computers ];
@@ -39,7 +38,6 @@ GtComputersNetwork >> gtNetworksComputersViewFor: aView [
 { #category : #'as yet unclassified' }
 GtComputersNetwork >> gtNetworksIpsViewFor: aView [
 	<gtView>
-	
 	^ aView list
 		title: 'Ips' translated;
 		items: [ self computers 

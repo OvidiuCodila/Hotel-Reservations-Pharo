@@ -194,7 +194,7 @@ GtViewsPresentationExamples >> viewCodeExample [
 				look: (GtExplainerTargetLook new explanationModel: #getView);
 				relocate:
 					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 133 @ 28))).
+						globalPointToLocal: (subject localPointToGlobal: 195 @ 28))).
 	inspectorContainer
 		addChild:
 			(BrButton new
@@ -306,7 +306,7 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 				size: 10 @ 10;
 				elevation: (BlRelativeElevation elevation: 10);
 				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #list);
+				look: (GtExplainerTargetLook new explanationModel: #columnedList);
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
@@ -321,6 +321,28 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #columns);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 83 @ 99))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #columns);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 83 @ 140))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewColumnedListCodeExplanationText;
@@ -337,7 +359,18 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewColumnedListCodeExplanationText [
 	| text |
-	text := '' asRopedText.
+	text := '
+	For the ' asRopedText,
+	('columned list' asRopedText glamorousExplanationFor: #columnedList),
+	'view, after specifying the ' asRopedText,
+	('items' asRopedText glamorousExplanationFor: #items),
+	', we can define the ' asRopedText,
+	('columns' asRopedText glamorousExplanationFor: #columns),
+	' by giving them a ' asRopedText,
+	('name' asRopedText glamorousExplanationFor: #name),
+	' and the ' asRopedText,
+	('items' asRopedText glamorousExplanationFor: #columnItems),
+	' each one has.' asRopedText.
 	
 	^ text
 		glamorousRegularFont;

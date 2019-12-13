@@ -49,7 +49,7 @@ GtViews101 >> create [
 					fontSize: 20;
 					foreground: Color gray)).
 		(GtTextAndElementSlide new
-			element: [self hotelRawViewExample];
+			element: [self makeAsBlElement: (HotelExamples new hotelWithOneRoom gtRawFor: GtPhlowView empty)];
 			textWithFormat: 
 				('For example, look at the following raw view for an Hotel object'
 					asRopedText
@@ -63,7 +63,7 @@ GtViews101 >> create [
 					glamorousRegularFont;
 					fontSize: 20)).
 		(GtTextAndElementSlide new
-			element: [self hotelRoomsViewExample];
+			element: [self makeAsBlElement: (HotelExamples new hotelWithThreeRooms gtRoomsFor: GtPhlowView empty)];
 			textWithFormat:
 				('So how about one that shows the rooms in the hotel?'
 					asRopedText
@@ -146,18 +146,8 @@ GtViews101 >> create [
 ]
 
 { #category : #'as yet unclassified' }
-GtViews101 >> hotelRawViewExample [
-	^ ((HotelExamples new hotelWithOneRoom gtRawFor: GtPhlowView empty) asElementDo: [:e |
-		BlElement new
-			look: BrShadowLook;
-			background: Color white;
-			margin: (BlInsets all: 20);
-			addChild: e]) size: 400@400.
-]
-
-{ #category : #'as yet unclassified' }
-GtViews101 >> hotelRoomsViewExample [
-	^ ((HotelExamples new hotelWithThreeRooms gtRoomsFor: GtPhlowView empty) asElementDo: [:e |
+GtViews101 >> makeAsBlElement: aView [
+	^ ((aView) asElementDo: [:e |
 		BlElement new
 			look: BrShadowLook;
 			background: Color white;
