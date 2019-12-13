@@ -7,6 +7,16 @@ Class {
 	#category : #'GToolkit-Demo-CustomViews'
 }
 
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> buttonLayoutForModelName: aName withSize: aSize [
+	^ BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: aSize;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: aName).
+]
+
 { #category : #accessing }
 GtViewsPresentationExamples >> inspectorOnHotelObjectExample [
 	<gtExample>
@@ -33,45 +43,25 @@ GtViewsPresentationExamples >> inspectorOnHotelObjectExample [
 	inspectorContainer addChild: subject.
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				geometry: BlCircle new;
-				size: 30 @ 30;
-				elevation: (BlRelativeElevation elevation: 10);
-				look: (GtExplainerTargetLook new explanationModel: #object);
+			((self buttonLayoutForModelName: #object withSize: (30 @ 30))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (inspectorHeader localPointToGlobal: 10 @ 5))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 30 @ 30;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #Raw);
+			((self buttonLayoutForModelName: #Raw withSize: (30 @ 30))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (inspectorView localPointToGlobal: 120 @ 5))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 30 @ 30;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #Rooms);
+			((self buttonLayoutForModelName: #Rooms withSize: (30 @ 30))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (inspectorView localPointToGlobal: 70 @ 5))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 40 @ 30;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #Tree);
+			((self buttonLayoutForModelName: #Tree withSize: (30 @ 30))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (inspectorView localPointToGlobal: 15 @ 5))).
@@ -133,6 +123,12 @@ GtViewsPresentationExamples >> pragmasMetricsViewExample [
 	subject := ((#gtView gtPragmas) gtMetricsFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
 	inspectorContainer addChild: subject.
+	inspectorContainer
+		addChild:
+			((self buttonLayoutForModelName: #lines withSize: (10 @ 10))
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 1 @ 95))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self pragmasMetricsViewExplanationText;
@@ -186,56 +182,31 @@ GtViewsPresentationExamples >> viewCodeExample [
 	inspectorContainer addChild: subject.
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #getView);
+			((self buttonLayoutForModelName: #getView withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 195 @ 28))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #returnView);
+			((self buttonLayoutForModelName: #returnView withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 68 @ 56))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #gtView);
+			((self buttonLayoutForModelName: #gtView withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 50 @ 40))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #title);
+			((self buttonLayoutForModelName: #title withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 70))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #types);
+			((self buttonLayoutForModelName: #types withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
@@ -301,56 +272,31 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 	inspectorContainer addChild: subject.
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #columnedList);
+			((self buttonLayoutForModelName: #columnedList withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #items);
+			((self buttonLayoutForModelName: #items withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #columns);
+			((self buttonLayoutForModelName: #columns withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 99))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #name);
+			((self buttonLayoutForModelName: #name withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 148 @ 99))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #columnItems);
+			((self buttonLayoutForModelName: #columnItems withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 117 @ 111))).
@@ -411,23 +357,13 @@ GtViewsPresentationExamples >> viewListCodeExample [
 	inspectorContainer addChild: subject.
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #list);
+			((self buttonLayoutForModelName: #list withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #items);
+			((self buttonLayoutForModelName: #items withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
@@ -483,111 +419,61 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 	inspectorContainer addChild: subject.
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #mondrian);
+			((self buttonLayoutForModelName: #mondrian withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #painting);
+			((self buttonLayoutForModelName: #painting withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #nodes);
+			((self buttonLayoutForModelName: #nodes withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 115 @ 98))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #nodeShape);
+			((self buttonLayoutForModelName: #nodeShape withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 146 @ 112))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #nodeValues);
+			((self buttonLayoutForModelName: #nodeValues withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 146 @ 168))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #edges);
+			((self buttonLayoutForModelName: #edges withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 115 @ 267))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #edgeShape);
+			((self buttonLayoutForModelName: #edgeShape withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 146 @ 308))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #connection);
+			((self buttonLayoutForModelName: #connection withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 146 @ 365))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #spot);
+			((self buttonLayoutForModelName: #spot withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 146 @ 279))).
 	inspectorContainer
 		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 10 @ 10;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #layout);
+			((self buttonLayoutForModelName: #layout withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
 						globalPointToLocal: (subject localPointToGlobal: 115 @ 392))).
