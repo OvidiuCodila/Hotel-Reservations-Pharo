@@ -55,35 +55,21 @@ GtComputersNetwork >> gtSchematicViewFor: aView [
 			view nodes
 				shape: [:x | 
 					BlTextElement new 
-					text: (x name asRopedText 
-						glamorousRegularFont;
-						foreground: Color black;
-						fontSize: 10);
-					geometry: BlEllipse new;
-					border: (BlBorder paint: Color green);
-					background: Color paleGreen;
-					size: 40 @ 10;
-					constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
+					text: (x name asRopedText glamorousRegularFont; foreground: Color black; fontSize: 10);
+					geometry: BlEllipse new; border: (BlBorder paint: Color green); background: Color paleGreen;
+					size: 40 @ 10; constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
 				with: { self }.
 			view nodes
 				shape: [:x |
 					BlTextElement new 
-					text: (x ip asRopedText 
-						glamorousRegularFont;
-						foreground: Color gray; 
-						fontSize: 8);
-					geometry: BlEllipse new;
-					border: (BlBorder paint: Color green);
-					background: Color paleGreen;
-					size: 60 @ 10;
-					constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
+					text: (x ip asRopedText glamorousRegularFont; foreground: Color gray; fontSize: 8);
+					geometry: BlEllipse new; border: (BlBorder paint: Color green); background: Color paleGreen;
+					size: 60 @ 10; constraintsDo: [ :c | c padding: (BlInsets all: 10) ]];
 				with: self computers.
 			view edges
-				fromCenterBottom;
-				toCenterTop;
+				fromCenterBottom; toCenterTop;
 				shape: [:x |
-					BlLineElement new
-						border: (BlBorder paint: (Color blue alpha: 0.3) width: 1.2)];
+					BlLineElement new border: (BlBorder paint: (Color blue alpha: 0.3) width: 1.2)];
 				connect: { self } from: [:n | n] toAll: [:n | n computers].
 			view layout tree].
 ]

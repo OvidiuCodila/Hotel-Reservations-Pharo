@@ -339,10 +339,21 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 				size: 10 @ 10;
 				elevation: (BlRelativeElevation elevation: 10);
 				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #columns);
+				look: (GtExplainerTargetLook new explanationModel: #name);
 				relocate:
 					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 83 @ 140))).
+						globalPointToLocal: (subject localPointToGlobal: 148 @ 99))).
+	inspectorContainer
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 10 @ 10;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #columnItems);
+				relocate:
+					(inspectorContainer
+						globalPointToLocal: (subject localPointToGlobal: 117 @ 111))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewColumnedListCodeExplanationText;

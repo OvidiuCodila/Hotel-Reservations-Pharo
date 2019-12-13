@@ -12,6 +12,13 @@ Class {
 }
 
 { #category : #accessing }
+GtComputer >> initialize [
+	super initialize.
+	name := nil.
+	ip := nil.
+]
+
+{ #category : #accessing }
 GtComputer >> ip [
 	^ ip.
 ]

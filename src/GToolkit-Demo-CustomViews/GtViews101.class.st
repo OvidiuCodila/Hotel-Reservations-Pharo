@@ -118,24 +118,24 @@ GtViews101 >> create [
 					fontSize: 20)).
 		(GtElementSlide new
 			element: [GtViewsPresentationExamples new viewCodeExample]).
-		"(GtTextAndElementSlide new
-			element: [];
-			text: '' asRopedText)."
 		(GtElementSlide new
 			element: [GtViewsPresentationExamples new viewListCodeExample]).
-		"(GtTextAndElementSlide new
-			element: [];
-			text: '' asRopedText)."
+		(GtTextAndElementSlide new
+			element: [self makeAsBlElement: 
+				(GtComputersNetworkExamples new networkWithTwoComputers gtNetworksIpsViewFor: GtPhlowView empty)];
+			text: 'List view example' asRopedText).
 		(GtElementSlide new
 			element: [GtViewsPresentationExamples new viewColumnedListCodeExample]).
-		"(GtTextAndElementSlide new
-			element: [];
-			text: '' asRopedText)."
+		(GtTextAndElementSlide new
+			element: [self makeAsBlElement: 
+				(GtComputersNetworkExamples new networkWithTwoComputers gtNetworksComputersViewFor: GtPhlowView empty)];
+			text: 'ColumnedList view example' asRopedText).
 		(GtElementSlide new
 			element: [GtViewsPresentationExamples new viewMondrianCodeExample]).
-		"(GtTextAndElementSlide new
-			element: [];
-			text: '' asRopedText)."
+		(GtTextAndElementSlide new
+			element: [self makeAsBlElement: 
+				(GtComputersNetworkExamples new networkWithThreeComputers gtSchematicViewFor: GtPhlowView empty)];
+			text: 'Mondrian view example' asRopedText).
 		"(GtElementSlide new
 			element: [GtViewsPresentationExamples new viewExplicitCodeExample])."
 		"(GtTextAndElementSlide new
