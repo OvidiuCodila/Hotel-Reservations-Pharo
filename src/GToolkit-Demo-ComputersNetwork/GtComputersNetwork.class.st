@@ -53,11 +53,15 @@ GtComputersNetwork >> gtSchematicViewFor: aView [
 		painting: [ :view | 
 			view nodes
 				shape: [:x | 
-					self viewNodeShapeOfSize: (40 @ 10) withText: (x name) ofFontSize: 10];
+					self viewNodeShapeOfSize: (40 @ 10) 
+						withText: (x name) 
+						ofFontSize: 10];
 				with: { self }.
 			view nodes
 				shape: [:x |
-					self viewNodeShapeOfSize: (60 @ 10) withText: (x ip) ofFontSize: 8];
+					self viewNodeShapeOfSize: (60 @ 10) 
+						withText: (x ip) 
+						ofFontSize: 8];
 				with: self computers.
 			view edges
 				fromCenterBottom; toCenterTop;

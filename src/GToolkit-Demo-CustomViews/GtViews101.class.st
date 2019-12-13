@@ -116,7 +116,12 @@ GtViews101 >> create [
 		(GtTextAndElementSlide new
 			element: [self makeAsBlElement: 
 				(GtComputersNetworkExamples new networkWithThreeComputers gtSchematicViewFor: GtPhlowView empty)];
-			text: 'Mondrian view example' asRopedText) }.
+			text: 'Mondrian view example' asRopedText).
+		(GtTitleSlide new titleText:
+			('Have fun visualizing' asRopedText
+				glamorousRegularFont;
+				foreground: Color black;
+				fontSize: 50)) }.
 	
 	^ show
 ]

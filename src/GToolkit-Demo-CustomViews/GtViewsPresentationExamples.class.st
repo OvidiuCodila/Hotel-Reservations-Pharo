@@ -458,13 +458,13 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 			((self buttonLayoutForModelName: #edgeShape withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 308))).
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 293))).
 	inspectorContainer
 		addChild:
 			((self buttonLayoutForModelName: #connection withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 365))).
+						globalPointToLocal: (subject localPointToGlobal: 146 @ 336))).
 	inspectorContainer
 		addChild:
 			((self buttonLayoutForModelName: #spot withSize: (10 @ 10))
@@ -476,7 +476,7 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 			((self buttonLayoutForModelName: #layout withSize: (10 @ 10))
 				relocate:
 					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 115 @ 392))).
+						globalPointToLocal: (subject localPointToGlobal: 115 @ 363))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewMondrianCodeExplanationText;
