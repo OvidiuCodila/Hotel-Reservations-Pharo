@@ -7,6 +7,49 @@ Class {
 	#category : #'GToolkit-Demo-CustomViews'
 }
 
+{ #category : #example }
+GtViewsPresentationExamples >> aMethodForPlayingAround [
+	<gtExample>
+	| container inspectorContainer subject editor coder styler |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		margin: (BlInsets all: 10);
+		look: BrShadowLook.
+	container := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal.
+	container explainer isExplanationHolder: true.
+	
+	styler := GtExplanationLinkStyler new.
+	styler addSelector: #title:.
+	styler addPragma: #gtView.
+	styler addVariableName: 'list'.
+	
+	coder := GtMethodCoder forMethod: GtComputersNetwork>>#gtNetworksIpsViewFor:.
+	coder explanationLink: styler.
+	subject := (coder expanded: true) asElement.
+	subject forceLayout.
+	inspectorContainer addChild: subject.
+	
+	editor := BrEditor new
+		look: BrGlamorousRegularEditorLook;
+		text: self viewCodeExplanationText;
+		margin: (BlInsets all: 10);
+		constraintsDo: [ :c | 
+			c vertical matchParent.
+			c horizontal matchParent.
+			c linear weight: 0.3 ].
+	container addChild: editor.
+	container addChild: inspectorContainer.
+	^ container
+]
+
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> buttonLayoutForModelName: aName withSize: aSize [
 	^ BrButton new
@@ -162,7 +205,7 @@ Inspecting the same querry, if we look at the Metrics view, which is another cus
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewCodeExample [
 	<gtExample>
-	| container inspectorContainer subject editor  |
+	| container inspectorContainer subject editor |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -237,10 +280,10 @@ GtViewsPresentationExamples >> viewCodeExplanationText [
 	('gtView' asRopedText glamorousExplanationFor: #gtView),
 	'pragma.
 	The returned view gets a ' asRopedText,
-	('title' asRopedText glamorousExplanationFor: #title),
+	('title' asRopedText glamorousExplanationFor: #title:),
 	' to be easily identified and a type.
 	There are lots of ' asRopedText,
-	('types' asRopedText glamorousExplanationFor: #types),
+	('types' asRopedText glamorousExplanationFor: #list),
 	' for the views. Next we will take a look at some of them.' asRopedText.
 	
 	^ text
