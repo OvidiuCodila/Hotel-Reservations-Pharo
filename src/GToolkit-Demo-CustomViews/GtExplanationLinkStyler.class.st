@@ -75,19 +75,16 @@ GtExplanationLinkStyler >> variablesAssociations [
 ]
 
 { #category : #visiting }
-GtExplanationLinkStyler >> visitArrayNode: aNode [
-	self selectorsAssociations do: [:association |
-		super visitArrayNode: aNode.
-		(aNode value = association key) ifTrue: 
-			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: association value ]].
-]
-
-{ #category : #visiting }
-GtExplanationLinkStyler >> visitLiteralArrayNode: aNode [
-	self selectorsAssociations do: [:association |
-		super visitLiteralArrayNode: aNode.
-		(aNode value = association key) ifTrue:
-			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: association value ]].
+GtExplanationLinkStyler >> visitArgumentNode: anArgumentNode [
+	| a b c d |
+	self variablesAssociations do: [:association |
+		super visitArgumentNode: anArgumentNode.
+		a := anArgumentNode name asString.
+		b := association key.
+		c := association value.
+		d := anArgumentNode start.
+		(anArgumentNode name asString = association key) ifTrue: 
+			[ self styleFrom: (anArgumentNode start - 1) to: (anArgumentNode start - 1) with: association value ]].
 ]
 
 { #category : #visiting }
@@ -112,7 +109,7 @@ GtExplanationLinkStyler >> visitMessageNode: aMessageNode [
 
 { #category : #visiting }
 GtExplanationLinkStyler >> visitPragmaNode: aNode [
-	self pragmasAssociations do: [:association |
+	self "pragmasAssociations"selectorsAssociations do: [:association |
 		super visitPragmaNode: aNode.
 		(aNode selector = association key) ifTrue: 
 			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: association value ]].

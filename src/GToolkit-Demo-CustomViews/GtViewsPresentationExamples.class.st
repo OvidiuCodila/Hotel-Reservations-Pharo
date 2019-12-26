@@ -28,8 +28,9 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 	
 	styler := GtExplanationLinkStyler new.
 	styler addSelector: #title:.
-	styler addPragma: #gtView.
-	styler addVariableName: 'list'.
+	styler addSelector: #gtView.
+	styler addSelector: #list.
+	styler addVariableName: 'aView'.
 	
 	coder := GtMethodCoder forMethod: GtComputersNetwork>>#gtNetworksIpsViewFor:.
 	coder explanationLink: styler.
