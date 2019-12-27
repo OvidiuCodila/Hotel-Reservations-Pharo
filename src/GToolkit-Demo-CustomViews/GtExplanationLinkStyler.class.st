@@ -30,16 +30,10 @@ Class {
 	#superclass : #GtCoderBodyStyler,
 	#instVars : [
 		'selectorsDictionary',
-		'pragmasDictionary',
 		'variablesDictionary'
 	],
 	#category : #'GToolkit-Demo-CustomViews'
 }
-
-{ #category : #adding }
-GtExplanationLinkStyler >> addPragma: aSymbol [
-	pragmasDictionary at: aSymbol put: {self yellowCircleAttributeFor: aSymbol}.
-]
 
 { #category : #accessing }
 GtExplanationLinkStyler >> addSelector: aSymbol [	
@@ -48,20 +42,14 @@ GtExplanationLinkStyler >> addSelector: aSymbol [
 
 { #category : #adding }
 GtExplanationLinkStyler >> addVariableName: aVariableName [
-	selectorsDictionary at: aVariableName put: {self yellowCircleAttributeFor: aVariableName}.
+	variablesDictionary at: (aVariableName asString) put: {self yellowCircleAttributeFor: aVariableName}.
 ]
 
 { #category : #initialization }
 GtExplanationLinkStyler >> initialize [
 	super initialize.
 	selectorsDictionary := IdentityDictionary new.
-	pragmasDictionary := IdentityDictionary new.
 	variablesDictionary := IdentityDictionary new.
-]
-
-{ #category : #accessing }
-GtExplanationLinkStyler >> pragmasAssociations [
-	^ pragmasDictionary associations.
 ]
 
 { #category : #accessing }
@@ -72,19 +60,6 @@ GtExplanationLinkStyler >> selectorsAssociations [
 { #category : #accessing }
 GtExplanationLinkStyler >> variablesAssociations [
 	^ variablesDictionary associations.
-]
-
-{ #category : #visiting }
-GtExplanationLinkStyler >> visitArgumentNode: anArgumentNode [
-	| a b c d |
-	self variablesAssociations do: [:association |
-		super visitArgumentNode: anArgumentNode.
-		a := anArgumentNode name asString.
-		b := association key.
-		c := association value.
-		d := anArgumentNode start.
-		(anArgumentNode name asString = association key) ifTrue: 
-			[ self styleFrom: (anArgumentNode start - 1) to: (anArgumentNode start - 1) with: association value ]].
 ]
 
 { #category : #visiting }
@@ -109,7 +84,7 @@ GtExplanationLinkStyler >> visitMessageNode: aMessageNode [
 
 { #category : #visiting }
 GtExplanationLinkStyler >> visitPragmaNode: aNode [
-	self "pragmasAssociations"selectorsAssociations do: [:association |
+	self selectorsAssociations do: [:association |
 		super visitPragmaNode: aNode.
 		(aNode selector = association key) ifTrue: 
 			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: association value ]].

@@ -27,9 +27,9 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 	container explainer isExplanationHolder: true.
 	
 	styler := GtExplanationLinkStyler new.
-	styler addSelector: #title:.
+	"styler addSelector: #title:.
 	styler addSelector: #gtView.
-	styler addSelector: #list.
+	styler addSelector: #list."
 	styler addVariableName: 'aView'.
 	
 	coder := GtMethodCoder forMethod: GtComputersNetwork>>#gtNetworksIpsViewFor:.
@@ -273,9 +273,9 @@ GtViewsPresentationExamples >> viewCodeExplanationText [
 	text := '
 	
 	Every method gets a ' asRopedText,
-	('view' asRopedText glamorousExplanationFor: #getView),
+	('view' asRopedText glamorousExplanationFor: #aView),
 	' object as a parameter and returns a ' asRopedText,
-	('view' asRopedText glamorousExplanationFor: #returnView),
+	('view' asRopedText glamorousExplanationFor: #aView),
 	'object.
 	Then, the first thing mentioned is the ' asRopedText,
 	('gtView' asRopedText glamorousExplanationFor: #gtView),
