@@ -10,7 +10,7 @@ Class {
 { #category : #example }
 GtViewsPresentationExamples >> aMethodForPlayingAround [
 	<gtExample>
-	| container inspectorContainer subject editor coder styler |
+	| container inspectorContainer subject editor coder styler styler2|
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -26,14 +26,17 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
 	
-	styler := GtExplanationLinkStyler new.
-	"styler addSelector: #title:.
+	styler := GtSelectorExplanationLinkStyler new.
+	styler addSelector: #title:.
 	styler addSelector: #gtView.
-	styler addSelector: #list."
-	styler addVariableName: 'aView'.
+	styler addSelector: #list.
+	styler2 := GtVariableExplanationLinkStyler new.
+	styler2 addVariableName: 'aView'.
+	styler2 addVariableName: 'aComputer'.
 	
 	coder := GtMethodCoder forMethod: GtComputersNetwork>>#gtNetworksIpsViewFor:.
-	coder explanationLink: styler.
+	coder selectorsExplanationLink: styler.
+	coder variablesExplanationLink: styler2.
 	subject := (coder expanded: true) asElement.
 	subject forceLayout.
 	inspectorContainer addChild: subject.

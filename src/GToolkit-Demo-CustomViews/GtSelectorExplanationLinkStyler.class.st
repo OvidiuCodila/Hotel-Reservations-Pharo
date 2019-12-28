@@ -26,52 +26,46 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #GtExplanationLinkStyler,
+	#name : #GtSelectorExplanationLinkStyler,
 	#superclass : #GtCoderBodyStyler,
 	#instVars : [
-		'selectorsDictionary',
-		'variablesDictionary'
+		'selectorsDictionary'
 	],
 	#category : #'GToolkit-Demo-CustomViews'
 }
 
 { #category : #accessing }
-GtExplanationLinkStyler >> addSelector: aSymbol [	
-	selectorsDictionary at: aSymbol put: {self yellowCircleAttributeFor: aSymbol}.
+GtSelectorExplanationLinkStyler >> addSelector: aSymbol [	
+	self addSelector: aSymbol withIdentifier: aSymbol.
 ]
 
 { #category : #adding }
-GtExplanationLinkStyler >> addVariableName: aVariableName [
-	variablesDictionary at: (aVariableName asString) put: {self yellowCircleAttributeFor: aVariableName}.
+GtSelectorExplanationLinkStyler >> addSelector: aSymbol withIdentifier: anIdentifier [
+	selectorsDictionary at: aSymbol put: anIdentifier.
 ]
 
 { #category : #initialization }
-GtExplanationLinkStyler >> initialize [
+GtSelectorExplanationLinkStyler >> initialize [
 	super initialize.
 	selectorsDictionary := IdentityDictionary new.
-	variablesDictionary := IdentityDictionary new.
 ]
 
 { #category : #accessing }
-GtExplanationLinkStyler >> selectorsAssociations [
+GtSelectorExplanationLinkStyler >> selectorsAssociations [
 	^ selectorsDictionary associations.
 ]
 
-{ #category : #accessing }
-GtExplanationLinkStyler >> variablesAssociations [
-	^ variablesDictionary associations.
-]
-
 { #category : #visiting }
-GtExplanationLinkStyler >> visitLiteralNode: aNode [
+GtSelectorExplanationLinkStyler >> visitLiteralNode: aNode [
 	self selectorsAssociations do: [:association |
 		super visitLiteralNode: aNode.
 		(aNode value = association key) ifTrue:
-			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: association value ]].
+			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: 
+				{self yellowCircleAttributeFor: (association value) } ]].
 ]
 
 { #category : #visiting }
-GtExplanationLinkStyler >> visitMessageNode: aMessageNode [
+GtSelectorExplanationLinkStyler >> visitMessageNode: aMessageNode [
 	self selectorsAssociations do: [:association |
 		super visitMessageNode: aMessageNode.
 		aMessageNode selector = association key
@@ -79,27 +73,21 @@ GtExplanationLinkStyler >> visitMessageNode: aMessageNode [
 				[  aMessageNode selectorParts
 					with: aMessageNode keywordsPositions
 					do: [ :keyword :position | 
-						self styleFrom: (position - 1) to: (position - 1) with: (association value) ]]].
+						self styleFrom: (position - 1) to: (position - 1) 
+							with: {self yellowCircleAttributeFor: (association value) } ]]].
 ]
 
 { #category : #visiting }
-GtExplanationLinkStyler >> visitPragmaNode: aNode [
+GtSelectorExplanationLinkStyler >> visitPragmaNode: aNode [
 	self selectorsAssociations do: [:association |
 		super visitPragmaNode: aNode.
 		(aNode selector = association key) ifTrue: 
-			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) with: association value ]].
-]
-
-{ #category : #visiting }
-GtExplanationLinkStyler >> visitVariableNode: aVariableNode [
-	self variablesAssociations do: [:association |
-		super visitVariableNode: aVariableNode.
-		(aVariableNode name asString = association key) ifTrue:
-			[ self styleFrom: (aVariableNode start - 1) to: (aVariableNode start - 1) with: association value ]].
+			[ self styleFrom: (aNode start - 1) to: (aNode start - 1) 
+				with: {self yellowCircleAttributeFor: (association value) } ]].
 ]
 
 { #category : #utilities }
-GtExplanationLinkStyler >> yellowCircleAttributeFor: aSymbol [
+GtSelectorExplanationLinkStyler >> yellowCircleAttributeFor: aSymbol [
 	| circleElement |
 	
 	circleElement := BlElement new
