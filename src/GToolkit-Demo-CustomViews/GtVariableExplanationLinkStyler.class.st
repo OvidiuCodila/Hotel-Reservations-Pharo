@@ -1,3 +1,6 @@
+"
+I add a yellow circle adornment to variables in a text. The variables are argument node, temporary nodes, self nodes, super node and global nodes.
+"
 Class {
 	#name : #GtVariableExplanationLinkStyler,
 	#superclass : #GtCoderBodyStyler,
@@ -34,19 +37,5 @@ GtVariableExplanationLinkStyler >> visitVariableNode: aVariableNode [
 		super visitVariableNode: aVariableNode.
 		(aVariableNode name asString = association key) ifTrue:
 			[ self styleFrom: (aVariableNode start - 1) to: (aVariableNode start - 1) 
-				with: { self yellowCircleAttributeFor: (association value) } ]].
-]
-
-{ #category : #utilities }
-GtVariableExplanationLinkStyler >> yellowCircleAttributeFor: aSymbol [
-	| circleElement |
-	
-	circleElement := BlElement new
-				geometry: BlEllipse new;
-				size: 10@10;
-				background: Color red;
-				look: (GtExplainerTargetLook new explanationModel: aSymbol).
-	^ BrTextAdornmentDynamicAttribute new
-				beReplace;
-				stencil: circleElement.
+				with: { YellowCircleExplanationTextAdornment forIdentifier: (association value) } ]].
 ]

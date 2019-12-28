@@ -31,7 +31,7 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 	styler addSelector: #gtView.
 	styler addSelector: #list.
 	styler2 := GtVariableExplanationLinkStyler new.
-	styler2 addVariableName: 'aView'.
+	styler2 addVariableName: 'self' withIdentifier: 'aView'.
 	styler2 addVariableName: 'aComputer'.
 	
 	coder := GtMethodCoder forMethod: GtComputersNetwork>>#gtNetworksIpsViewFor:.
@@ -52,16 +52,6 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 	container addChild: editor.
 	container addChild: inspectorContainer.
 	^ container
-]
-
-{ #category : #'as yet unclassified' }
-GtViewsPresentationExamples >> buttonLayoutForModelName: aName withSize: aSize [
-	^ BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: aSize;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: aName).
 ]
 
 { #category : #accessing }
@@ -209,7 +199,7 @@ Inspecting the same querry, if we look at the Metrics view, which is another cus
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewCodeExample [
 	<gtExample>
-	| container inspectorContainer subject editor |
+	| container inspectorContainer subject editor coder selectorStyler variableStyler |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -224,39 +214,23 @@ GtViewsPresentationExamples >> viewCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((GtComputersNetwork>>#gtNetworksIpsViewFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	
+	selectorStyler := GtSelectorExplanationLinkStyler new.
+	selectorStyler addSelector: #gtView.
+	selectorStyler addSelector: #title: withIdentifier: #title.
+	selectorStyler addSelector: #list.
+	
+	variableStyler := GtVariableExplanationLinkStyler new.
+	variableStyler addVariableName: 'aView'.
+	
+	coder := GtMethodCoder forMethod: (GtComputersNetwork>>#gtNetworksIpsViewFor:).
+	coder selectorsExplanationLink: selectorStyler.
+	coder variablesExplanationLink: variableStyler.
+	subject := (coder expanded: true) asElement.
 	subject forceLayout.
+	
 	inspectorContainer addChild: subject.
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #getView withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 195 @ 28))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #returnView withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 68 @ 56))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #gtView withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 50 @ 40))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #title withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 83 @ 70))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #types withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
+	
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewCodeExplanationText;
@@ -276,19 +250,17 @@ GtViewsPresentationExamples >> viewCodeExplanationText [
 	text := '
 	
 	Every method gets a ' asRopedText,
-	('view' asRopedText glamorousExplanationFor: #aView),
-	' object as a parameter and returns a ' asRopedText,
-	('view' asRopedText glamorousExplanationFor: #aView),
-	'object.
-	Then, the first thing mentioned is the ' asRopedText,
+	('view' asRopedText glamorousExplanationFor: 'aView'),
+	' object as a parameter and returns a view object.
+	At the same time, all methods start with the ' asRopedText,
 	('gtView' asRopedText glamorousExplanationFor: #gtView),
 	'pragma.
 	The returned view gets a ' asRopedText,
-	('title' asRopedText glamorousExplanationFor: #title:),
-	' to be easily identified and a type.
-	There are lots of ' asRopedText,
-	('types' asRopedText glamorousExplanationFor: #list),
-	' for the views. Next we will take a look at some of them.' asRopedText.
+	('title' asRopedText glamorousExplanationFor: #title),
+	' for easy identification amongst other views and a ' asRopedText,
+	('type' asRopedText glamorousExplanationFor: #list),
+	'.
+	There are lots of types for the views. So lets take a look at some of them.' asRopedText.
 	
 	^ text
 		glamorousRegularFont;
@@ -298,7 +270,7 @@ GtViewsPresentationExamples >> viewCodeExplanationText [
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewColumnedListCodeExample [
 	<gtExample>
-	| container inspectorContainer subject editor  |
+	| container inspectorContainer subject editor coder selectorStyler |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -313,40 +285,20 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((GtComputersNetwork>>#gtNetworksComputersViewFor:) gtSourceFor: GtPhlowView empty) 
-		asElementDo: [ :e | e ].
+	
+	selectorStyler := GtSelectorExplanationLinkStyler new.
+	selectorStyler addSelector: #columnedList withIdentifier: #type.
+	selectorStyler addSelector: #items: withIdentifier: #items.
+	selectorStyler addSelector: #column:item: withIdentifier: #column.
+	selectorStyler addSelector: 'Name'.
+	
+	coder := GtMethodCoder forMethod: (GtComputersNetwork>>#gtNetworksComputersViewFor:).
+	coder selectorsExplanationLink: selectorStyler.
+	subject := (coder expanded: true) asElement.
 	subject forceLayout.
+	
 	inspectorContainer addChild: subject.
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #columnedList withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #items withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #columns withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 83 @ 99))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #name withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 148 @ 99))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #columnItems withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 117 @ 111))).
+	
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewColumnedListCodeExplanationText;
@@ -365,16 +317,15 @@ GtViewsPresentationExamples >> viewColumnedListCodeExplanationText [
 	| text |
 	text := '
 	For the ' asRopedText,
-	('columned list' asRopedText glamorousExplanationFor: #columnedList),
-	'view, after specifying the ' asRopedText,
+	('columned list' asRopedText glamorousExplanationFor: #type),
+	'view, after the title, we specify what ' asRopedText,
 	('items' asRopedText glamorousExplanationFor: #items),
-	', we can define the ' asRopedText,
-	('columns' asRopedText glamorousExplanationFor: #columns),
-	' by giving them a ' asRopedText,
-	('name' asRopedText glamorousExplanationFor: #name),
-	' and the ' asRopedText,
-	('items' asRopedText glamorousExplanationFor: #columnItems),
-	' each one has.' asRopedText.
+	' to use. 
+	Then we define each ' asRopedText,
+	('column' asRopedText glamorousExplanationFor: #column),
+	' by giving it a ' asRopedText,
+	('name' asRopedText glamorousExplanationFor: 'Name'),
+	' and the items it has.' asRopedText.
 	
 	^ text
 		glamorousRegularFont;
@@ -384,7 +335,7 @@ GtViewsPresentationExamples >> viewColumnedListCodeExplanationText [
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewListCodeExample [
 	<gtExample>
-	| container inspectorContainer subject editor  |
+	| container inspectorContainer subject editor coder selectorStyler |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -399,21 +350,18 @@ GtViewsPresentationExamples >> viewListCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((GtComputersNetwork>>#gtNetworksIpsViewFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	
+	selectorStyler := GtSelectorExplanationLinkStyler new.
+	selectorStyler addSelector: #list withIdentifier: #type.
+	selectorStyler addSelector: #items: withIdentifier: #items.
+	
+	coder := GtMethodCoder forMethod: (GtComputersNetwork>>#gtNetworksIpsViewFor:).
+	coder selectorsExplanationLink: selectorStyler.
+	subject := (coder expanded: true) asElement.
 	subject forceLayout.
+	
 	inspectorContainer addChild: subject.
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #list withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #items withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
+	
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewListCodeExplanationText;
@@ -433,7 +381,7 @@ GtViewsPresentationExamples >> viewListCodeExplanationText [
 	
 	text := '
 	If we want to make a ' asRopedText,
-	('list' asRopedText glamorousExplanationFor: #list),
+	('list' asRopedText glamorousExplanationFor: #type),
 	' view, besides the title, we need to mention the ' asRopedText,
 	('items' asRopedText glamorousExplanationFor: #items),
 	'the list will consist of.' asRopedText.
@@ -446,7 +394,7 @@ GtViewsPresentationExamples >> viewListCodeExplanationText [
 { #category : #'as yet unclassified' }
 GtViewsPresentationExamples >> viewMondrianCodeExample [
 	<gtExample>
-	| container inspectorContainer subject editor  |
+	| container inspectorContainer subject editor coder selectorStyler |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -461,69 +409,26 @@ GtViewsPresentationExamples >> viewMondrianCodeExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := ((GtComputersNetwork>>#gtSchematicViewFor:) gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	
+	selectorStyler := GtSelectorExplanationLinkStyler new.
+	selectorStyler addSelector: #mondrian.
+	selectorStyler addSelector: #painting: withIdentifier: #painting.
+	selectorStyler addSelector: #nodes.
+	selectorStyler addSelector: #shape: withIdentifier: #shape.
+	selectorStyler addSelector: #with: withIdentifier: #with.
+	selectorStyler addSelector: #edges.
+	selectorStyler addSelector: #connect:from:toAll: withIdentifier: #connect.
+	selectorStyler addSelector: #layout.
+	selectorStyler addSelector: #fromCenterBottom withIdentifier: #from.
+	selectorStyler addSelector: #toCenterTop withIdentifier: #to.
+	
+	coder := GtMethodCoder forMethod: (GtComputersNetwork>>#gtSchematicViewFor:).
+	coder selectorsExplanationLink: selectorStyler.
+	subject := (coder expanded: true) asElement.
 	subject forceLayout.
+	
 	inspectorContainer addChild: subject.
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #mondrian withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 118 @ 56))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #painting withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 83 @ 85))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #nodes withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 115 @ 98))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #nodeShape withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 112))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #nodeValues withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 168))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #edges withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 115 @ 267))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #edgeShape withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 293))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #connection withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 336))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #spot withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 146 @ 279))).
-	inspectorContainer
-		addChild:
-			((self buttonLayoutForModelName: #layout withSize: (10 @ 10))
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (subject localPointToGlobal: 115 @ 363))).
+	
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self viewMondrianCodeExplanationText;
@@ -550,18 +455,18 @@ GtViewsPresentationExamples >> viewMondrianCodeExplanationText [
 	The ' asRopedText,
 	('nodes' asRopedText glamorousExplanationFor: #nodes),
 	', to which we give a ' asRopedText,
-	('shape' asRopedText glamorousExplanationFor: #nodeShape),
+	('shape' asRopedText glamorousExplanationFor: #shape),
 	' and ' asRopedText,
-	('values' asRopedText glamorousExplanationFor: #nodeValues),
+	('values' asRopedText glamorousExplanationFor: #with),
 	'.
 	The ' asRopedText,
 	('edges' asRopedText glamorousExplanationFor: #edges),
 	', to which we give a ' asRopedText,
-	('shape' asRopedText glamorousExplanationFor: #edgeShape),
+	('shape' asRopedText glamorousExplanationFor: #to),
 	', the values and how to ' asRopedText,
-	('connect' asRopedText glamorousExplanationFor: #connection),
+	('connect' asRopedText glamorousExplanationFor: #connect),
 	' them and a ' asRopedText,
-	('spot' asRopedText glamorousExplanationFor: #spot),
+	('spot' asRopedText glamorousExplanationFor: #from),
 	' where to connect them to the nodes.
 	And finally the ' asRopedText,
 	('layout' asRopedText glamorousExplanationFor: #layout),

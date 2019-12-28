@@ -125,6 +125,20 @@ HotelExamples >> hotelWithOneRoomAndOneReservation [
 ]
 
 { #category : #'as yet unclassified' }
+HotelExamples >> hotelWithThreeRooms [
+	<gtExample>
+	| hotel |
+	hotel := self hotelWithoutRooms.
+	hotel addRoomFor: 4.
+	hotel addRoomFor: 3.
+	hotel addRoomFor: 4.
+	
+	self assert: hotel rooms size equals: 3.
+	
+	^ hotel.
+]
+
+{ #category : #'as yet unclassified' }
 HotelExamples >> hotelWithoutRooms [
 	<gtExample>
 	| hotel |
