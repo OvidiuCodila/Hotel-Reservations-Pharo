@@ -54,6 +54,16 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 	^ container
 ]
 
+{ #category : #'as yet unclassified' }
+GtViewsPresentationExamples >> buttonLayoutForModelName: aName withSize: aSize [
+	^ BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: aSize;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: aName).
+]
+
 { #category : #accessing }
 GtViewsPresentationExamples >> inspectorOnHotelObjectExample [
 	<gtExample>
@@ -289,7 +299,7 @@ GtViewsPresentationExamples >> viewColumnedListCodeExample [
 	selectorStyler := GtSelectorExplanationLinkStyler new.
 	selectorStyler addSelector: #columnedList withIdentifier: #type.
 	selectorStyler addSelector: #items: withIdentifier: #items.
-	selectorStyler addSelector: #column:item: withIdentifier: #column.
+	selectorStyler addSelector: #column:item:.
 	selectorStyler addSelector: 'Name'.
 	
 	coder := GtMethodCoder forMethod: (GtComputersNetwork>>#gtNetworksComputersViewFor:).
@@ -322,10 +332,12 @@ GtViewsPresentationExamples >> viewColumnedListCodeExplanationText [
 	('items' asRopedText glamorousExplanationFor: #items),
 	' to use. 
 	Then we define each ' asRopedText,
-	('column' asRopedText glamorousExplanationFor: #column),
+	('column' asRopedText glamorousExplanationFor: #column:),
 	' by giving it a ' asRopedText,
 	('name' asRopedText glamorousExplanationFor: 'Name'),
-	' and the items it has.' asRopedText.
+	' and the ' asRopedText,
+	('items' asRopedText glamorousExplanationFor: #item:),
+	' it has.' asRopedText.
 	
 	^ text
 		glamorousRegularFont;

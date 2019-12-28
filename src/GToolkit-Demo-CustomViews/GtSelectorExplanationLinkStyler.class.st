@@ -43,16 +43,22 @@ GtSelectorExplanationLinkStyler >> visitLiteralNode: aNode [
 
 { #category : #visiting }
 GtSelectorExplanationLinkStyler >> visitMessageNode: aMessageNode [
-	self selectorsAssociations do: [:association |
+	| attribute |
+	self selectorsAssociations do: [ :association | 
 		super visitMessageNode: aMessageNode.
-		aMessageNode selector = association key
-			ifTrue:
-				[  aMessageNode selectorParts
-					with: aMessageNode keywordsPositions
-					do: [ :keyword :position | 
-						self styleFrom: (position - 1) to: (position - 1) 
-							with: { YellowCircleExplanationTextAdornment forIdentifier: (association value) } ].
-					selectorsDictionary removeKey: (association key)]].
+		aMessageNode selector = association key ifTrue: [ 
+			aMessageNode selectorParts
+				with: aMessageNode keywordsPositions
+				do: [ :keyword :position | 
+					attribute := association key = association value
+						             ifTrue: [ 
+						             YellowCircleExplanationTextAdornment 
+							             forIdentifier: keyword ]
+						             ifFalse: [ 
+							             YellowCircleExplanationTextAdornment 
+								             forIdentifier: association value ].
+					self styleFrom: position - 1 to: position - 1 with: { attribute } ].
+			selectorsDictionary removeKey: association key ] ]
 ]
 
 { #category : #visiting }

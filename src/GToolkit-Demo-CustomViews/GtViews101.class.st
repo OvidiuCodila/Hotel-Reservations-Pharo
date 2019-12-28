@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-Demo-CustomViews'
 }
 
+{ #category : #accessing }
+GtViews101 class >> start [
+	^ BlSpace new addChild: self new create asElement; show.
+]
+
 { #category : #'api - instantiation' }
 GtViews101 >> create [
 	| show |
@@ -126,7 +131,7 @@ GtViews101 >> create [
 	^ show
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 GtViews101 >> makeAsBlElement: aView [
 	^ ((aView) asElementDo: [:e |
 		BlElement new
