@@ -451,26 +451,26 @@ GtViewsPresentationExamples >> viewMondrianCodeExplanationText [
 	('mondrian' asRopedText glamorousExplanationFor: #mondrian),
 	' view has a ' asRopedText,
 	('painting' asRopedText glamorousExplanationFor: #painting),
-	'message where we specify the following things.
+	'message that gets a block as a parameter. In that block we define the follwing things.
 	The ' asRopedText,
 	('nodes' asRopedText glamorousExplanationFor: #nodes),
-	', to which we give a ' asRopedText,
+	', by giving them a ' asRopedText,
 	('shape' asRopedText glamorousExplanationFor: #shape),
-	' and ' asRopedText,
+	' and a list of ' asRopedText,
 	('values' asRopedText glamorousExplanationFor: #with),
 	'.
 	The ' asRopedText,
 	('edges' asRopedText glamorousExplanationFor: #edges),
-	', to which we give a ' asRopedText,
-	('shape' asRopedText glamorousExplanationFor: #to),
-	', the values and how to ' asRopedText,
+	', by giving them a shape, the values to ' asRopedText,
 	('connect' asRopedText glamorousExplanationFor: #connect),
-	' them and a ' asRopedText,
-	('spot' asRopedText glamorousExplanationFor: #from),
-	' where to connect them to the nodes.
-	And finally the ' asRopedText,
+	' and how and ' asRopedText,
+	('from' asRopedText glamorousExplanationFor: #from),
+	' where ' asRopedText,
+	('to' asRopedText glamorousExplanationFor: #to),
+	' where to draw the connecting lines.
+	Finally, we give a ' asRopedText,
 	('layout' asRopedText glamorousExplanationFor: #layout),
-	' that says how to arrange the nodes on the screen.' asRopedText.
+	' that says how the nodes are arranged.' asRopedText.
 	
 	^ text
 		glamorousRegularFont;
