@@ -3,7 +3,7 @@ I add a yellow circle adornment to variables in a text. The variables are argume
 "
 Class {
 	#name : #GtVariableExplanationLinkStyler,
-	#superclass : #GtCoderBodyStyler,
+	#superclass : #GtSourceExplanationLinkStyler,
 	#instVars : [
 		'variablesDictionary'
 	],

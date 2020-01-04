@@ -3,7 +3,7 @@ I add a yellow circle adornment to selectors in a text. The selectors are pragma
 "
 Class {
 	#name : #GtSelectorExplanationLinkStyler,
-	#superclass : #GtCoderBodyStyler,
+	#superclass : #GtSourceExplanationLinkStyler,
 	#instVars : [
 		'selectorsDictionary'
 	],
