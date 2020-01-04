@@ -30,8 +30,10 @@ GtViewsPresentationExamples >> aMethodForPlayingAround [
 	selectors addSelector: #title:.
 	selectors addSelector: #gtView.
 	selectors addSelector: #list.
+	
 	variables := GtVariableExplanationLinkStyler new.
 	variables addVariableName: 'aView'.
+	
 	stylersList := OrderedCollection new.
 	stylersList add: selectors.
 	stylersList add: variables.
